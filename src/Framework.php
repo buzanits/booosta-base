@@ -13,13 +13,13 @@ class Framework
 
     if(php_sapi_name() != 'cli') session_start();
 
-    foreach(glob('vendor/buzanits/booosta*') as $moduledir)
-      if(is_readable("$moduledir/init.php"))
-        include("$moduledir/init.php");
+    foreach(glob('vendor/booosta/*') as $moduledir)
+      if(is_readable("$moduledir/src/init.php"))
+        include("$moduledir/src/init.php");
 
-    foreach(glob('vendor/buzanits/booosta*') as $moduledir)
-      if(is_readable("$moduledir/main.php"))
-        include("$moduledir/main.php");
+    foreach(glob('vendor/booosta/*') as $moduledir)
+      if(is_readable("$moduledir/src/main.php"))
+        include("$moduledir/src/main.php");
 
     if(is_dir('incl'))
       foreach(glob('incl/*.incl.php') as $inclfile)
@@ -42,7 +42,7 @@ class Framework
 
   public static function module_exists($module)
   {
-    return is_dir("lib/modules/$module");
+    return is_dir("vendor/booosta/$module");
   }
   
   public static function require_module($module)
