@@ -79,7 +79,7 @@ abstract class Base
 
   public function __get($var)
   {
-    if($this->__get[$var]) return call_user_func([$this, $this->__get[$var]]);
+    if(!empty($this->__get[$var])) return call_user_func([$this, $this->__get[$var]]);
     return null;
   }
 }
