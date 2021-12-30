@@ -12,6 +12,7 @@ class Framework
     include_once 'local/config.incl.php';
 
     if(php_sapi_name() != 'cli') session_start();
+    error_reporting(E_ERROR | E_PARSE);
 
     foreach(glob('vendor/booosta/*') as $moduledir)
       if(is_readable("$moduledir/src/init.php"))
