@@ -54,10 +54,11 @@ class Framework
 
   public static function ifeval($condition, $scope = null)
   {
-    #print "condition: $condition\n";
+    #\booosta\Framework::debug("condition: $condition");
     if($condition == '') $condition = 'false';
     if($scope === null) $V = $GLOBALS; else $V = $scope;
-    $condition = preg_replace("/\\\$([A-Za-z0-9_]+)/", '$V[$1]', $condition);
+    $condition = preg_replace("/\\\$([A-Za-z0-9_]+)/", '$V["$1"]', $condition);
+    #\booosta\Framework::debug("condition after: $condition");
     return eval("if($condition) return true; else return false;");
   }
   
