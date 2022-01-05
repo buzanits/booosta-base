@@ -27,15 +27,24 @@ abstract class Base
   {
     $params = func_get_args();
     $classname = array_shift($params);
-    #\booosta\debug("makeInstance $classname");
+    #\booosta\Framework::debug("start makeInstance $classname");
 
     try { $reflector = new \ReflectionClass($classname); }
     catch(\ReflectionException $e) 
     { 
-      if(!strstr($classname, "\\")) $reflector = new \ReflectionClass("\\booosta\\" . lcfirst($classname) . "\\" . $classname);
-      else throw $e;
+      try {
+        if(!strstr($classname, "\\")) $reflector = new \ReflectionClass("\\booosta\\" . lcfirst($classname) . "\\" . $classname);
+        else throw $e;
+      }
+      catch(\ReflectionException $e)
+      {
+        if(!strstr($classname, "\\")) $reflector = new \ReflectionClass("\\booosta\\" . lcfirst($classname) . "\\" . ucfirst($classname));
+        else throw $e;
+
+      }
     }
 
+    #\booosta\Framework::debug("in makeInstance $classname");
     $save_parentobj = $GLOBALS['parentobj'] ?? null;
     $save_topobj = $GLOBALS['topobj'] ?? null;
 
@@ -43,6 +52,7 @@ abstract class Base
     $GLOBALS['topobj'] = $this->topobj;
 
     $obj = $reflector->newInstanceArgs($params);
+    #\booosta\Framework::debug("done makeInstance $classname");
 
     $GLOBALS['parentobj'] = $save_parentobj;
     $GLOBALS['topobj'] = $save_topobj;
