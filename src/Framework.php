@@ -5,6 +5,7 @@ class Framework
 {
   static public $module_traits = [];
   static public $CONFIG = [];
+  static public $module_config = [];
   static public $classmap = [];
 
   public static function load()
@@ -12,7 +13,7 @@ class Framework
     include_once 'local/config.incl.php';
 
     if(php_sapi_name() != 'cli') session_start();
-    error_reporting(E_ERROR | E_PARSE);
+    error_reporting(E_COMPILE_ERROR | E_ERROR | E_PARSE);
 
     foreach(glob('vendor/booosta/*') as $moduledir)
       if(is_readable("$moduledir/src/init.php"))
@@ -101,7 +102,26 @@ class Framework
     return $result[1][0];
   }
   
+
+  /*
+  We need this file to be able to do something like
+  chdir('../../..');
+  even if Booosta is symlinked into the webspace. chdir() stays in the linked directory tree what is bad.
+
+  If you need to chance an other amount than 3 levels, you must set $dirlevels__ to a different value before including this file
+  */
+
+  public static function croot($dirlevels__ = 4)
+  {
+    $dir__ = dirname($_SERVER['SCRIPT_FILENAME']);
+    $tmp__ = explode('/', $dir__);
+    for($i__=0;$i__<$dirlevels__;$i__++) array_pop($tmp__);
+    $dir__ = implode('/', $tmp__);
+    chdir($dir__);
+    unset($dirlevels__, $dir__, $tmp__, $i__);
+  }
   
+
   public static function debug($data, $file = 'debug.msg') { file_put_contents($file, print_r($data, true) . "\n", FILE_APPEND); }
   public static function ttime($msg = '') { debug(microtime(true) . ' ' . $msg); }
 }
