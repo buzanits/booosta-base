@@ -113,7 +113,8 @@ class Framework
 
   public static function croot($dirlevels__ = 4)
   {
-    $dir__ = dirname($_SERVER['SCRIPT_FILENAME']);
+    #$dir__ = dirname($_SERVER['SCRIPT_FILENAME']);
+    $dir__ = __DIR__;
     $tmp__ = explode('/', $dir__);
     for($i__=0;$i__<$dirlevels__;$i__++) array_pop($tmp__);
     $dir__ = implode('/', $tmp__);
