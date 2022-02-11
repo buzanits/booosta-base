@@ -122,6 +122,30 @@ class Framework
     unset($dirlevels__, $dir__, $tmp__, $i__);
   }
   
+  public static function array2xml($a, $root = 'root')
+  {
+    if($root === null) $root = 'root';
+  
+    $xml = new \SimpleXMLElement("<?xml version=\"1.0\"?"."><$root></$root>");
+    self::array_to_xml_($a, $xml);
+    return $xml->asXML();
+  }
+  
+  public static function array_to_xml_($a, &$xml)
+  {
+    foreach($a as $key => $value):
+      if(is_array($value)):
+        if(!is_numeric($key)):
+          $subnode = $xml->addChild($key);
+          array_to_xml_($value, $subnode);
+        else:
+          array_to_xml_($value, $xml);
+        endif;
+      else:
+        $xml->addChild($key,$value);
+      endif;
+    endforeach;
+  }
 
   public static function debug($data, $file = 'debug.msg') { file_put_contents($file, print_r($data, true) . "\n", FILE_APPEND); }
   public static function ttime($msg = '') { debug(microtime(true) . ' ' . $msg); }
