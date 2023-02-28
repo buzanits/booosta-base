@@ -50,7 +50,7 @@ class Framework
   public static function require_module($module)
   {
     $modules = explode(',', $module);
-    foreach($modules as $mod) if(!module_exists($mod)) throw new Exception("Required module $mod missing");
+    foreach($modules as $mod) if(!self::module_exists($mod)) throw new \Exception("Required module $mod missing");
   }
 
   public static function ifeval($condition, $scope = null)
@@ -61,6 +61,12 @@ class Framework
     $condition = preg_replace("/\\\$([A-Za-z0-9_]+)/", '$V["$1"]', $condition);
     #\booosta\Framework::debug("condition after: $condition");
     return eval("if($condition) return true; else return false;");
+  }
+
+  public static function between($str, $str1, $str2)
+  {
+    preg_match("/.*$str1(.*)$str2.*/", $str, $result, PREG_OFFSET_CAPTURE);
+    return $result[1][0];
   }
   
   public static function check_utf8($str)
@@ -91,7 +97,7 @@ class Framework
   
   public static function to_utf8($str)
   {
-    if(!check_utf8($str)) return utf8_encode($str);
+    if(!self::check_utf8($str)) return utf8_encode($str);
     return $str;
   }
   
@@ -137,9 +143,9 @@ class Framework
       if(is_array($value)):
         if(!is_numeric($key)):
           $subnode = $xml->addChild($key);
-          array_to_xml_($value, $subnode);
+          self::array_to_xml_($value, $subnode);
         else:
-          array_to_xml_($value, $xml);
+          self::array_to_xml_($value, $xml);
         endif;
       else:
         $xml->addChild($key,$value);
@@ -148,5 +154,5 @@ class Framework
   }
 
   public static function debug($data, $file = 'debug.msg') { file_put_contents($file, print_r($data, true) . "\n", FILE_APPEND); }
-  public static function ttime($msg = '') { debug(microtime(true) . ' ' . $msg); }
+  public static function ttime($msg = '') { self::debug(microtime(true) . ' ' . $msg); }
 }
