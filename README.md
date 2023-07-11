@@ -6,3 +6,5 @@ data objects can be seen as the Vs and Ms of MVC.
 
 Up to version 3 Booosta was available at Sourceforge: https://sourceforge.net/projects/booosta/ From version
 4 on it resides on Github and is available from Packagist under buzanits/booosta-webapp .
+
+For installation instructions see https://github.com/buzanits/booosta-installer
