@@ -92,4 +92,9 @@ abstract class Base
     if(!empty($this->__get[$var])) return call_user_func([$this, $this->__get[$var]]);
     return null;
   }
+
+  public function get_vars()
+  {
+    return get_object_vars($this);
+  }
 }
