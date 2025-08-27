@@ -7,6 +7,7 @@ class Framework
   static public $CONFIG = [];
   static public $module_config = [];
   static public $classmap = [];
+  static public $wrapperclass;
 
   public static function load()
   {
