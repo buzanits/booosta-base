@@ -1,7 +1,7 @@
 <?php
 namespace booosta\base;
 
-$module = \booosta\Framework::$wrapperclass;
+$module = \booosta\Framework::$wrappermodule;
 
 eval("
 namespace booosta\\base;
@@ -12,6 +12,7 @@ class Wrapperbase { use \\booosta\\$module\\webapp; protected \$modulename = '$m
 class Wrapper extends Wrapperbase
 {
   protected $includes = '';
+  public $base_dir = '';
 
   public function exec()
   {

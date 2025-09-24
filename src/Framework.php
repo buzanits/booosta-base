@@ -8,6 +8,7 @@ class Framework
   static public $module_config = [];
   static public $classmap = [];
   static public $wrapperclass;
+  static public $wrappermodule;
 
   public static function load()
   {

@@ -17,8 +17,13 @@ abstract class Module extends Base
 
   public function loadHTML()
   {
-    $class = strtolower(array_pop(explode('\\', get_class($this))));
+    $c = explode('\\', get_class($this));
+    $class = strtolower(array_pop($c));
     \booosta\Framework::$wrapperclass = $class;
+
+    $module = strtolower(array_pop($c));
+    \booosta\Framework::$wrappermodule = $module;
+    #\booosta\Framework::debug(get_class($this)); \booosta\Framework::debug($class); \booosta\Framework::debug($module);
 
     require 'vendor/booosta/base/src/Wrapper.php';
     $wrapper = new \booosta\base\Wrapper();
