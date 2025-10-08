@@ -25,7 +25,7 @@ abstract class Module extends Base
     \booosta\Framework::$wrappermodule = $module;
     #\booosta\Framework::debug(get_class($this)); \booosta\Framework::debug($class); \booosta\Framework::debug($module);
 
-    require 'vendor/booosta/base/src/Wrapper.php';
+    if(!class_exists("\\booosta\\Base\\Wrapper")) require 'vendor/booosta/base/src/Wrapper.php';
     $wrapper = new \booosta\base\Wrapper();
     $wrapper->exec();
 
